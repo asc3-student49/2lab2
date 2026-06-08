@@ -1,0 +1,57 @@
+[
+  {
+    "id": "neural-latte",
+    "name": "Neural Network Latte",
+    "description": "Smooth espresso with steamed milk, inspired by the layers of a neural network",
+    "category": "specialty",
+    "sizes": {
+      "small": { "price": 4.50 },
+      "medium": { "price": 5.50 },
+      "large": { "price": 6.50 }
+    }
+  },
+  {
+    "id": "machine-mocha",
+    "name": "Machine Learning Mocha",
+    "description": "Rich chocolate meets bold espresso — a blend that improves with every sip",
+    "category": "specialty",
+    "sizes": {
+      "small": { "price": 5.00 },
+      "medium": { "price": 6.00 },
+      "large": { "price": 7.00 }
+    }
+  },
+  {
+    "id": "transformer-white",
+    "name": "Transformer Flat White",
+    "description": "Velvety microfoam over a double shot — attention is all you need",
+    "category": "specialty",
+    "sizes": {
+      "small": { "price": 4.75 },
+      "medium": { "price": 5.75 },
+      "large": { "price": 6.75 }
+    }
+  },
+  {
+    "id": "deep-doppio",
+    "name": "Deep Learning Doppio",
+    "description": "Two shots of pure espresso — deep, intense, and focused",
+    "category": "classic",
+    "sizes": {
+      "small": { "price": 3.50 },
+      "medium": { "price": 4.25 },
+      "large": { "price": 5.00 }
+    }
+  },
+  {
+    "id": "gan-cappuccino",
+    "name": "Generative Adversarial Cappuccino",
+    "description": "Equal parts espresso, steamed milk, and foam — perfectly balanced through competition",
+    "category": "classic",
+    "sizes": {
+      "small": { "price": 4.25 },
+      "medium": { "price": 5.25 },
+      "large": { "price": 6.25 }
+    }
+  }
+]

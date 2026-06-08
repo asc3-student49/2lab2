@@ -1,0 +1,10 @@
+schema: spec-driven
+
+context: |
+  BeanBotics is an AI-themed coffee ordering web application.
+  Tech stack: Python 3.10+, FastAPI, vanilla HTML/CSS/JavaScript frontend.
+  Backend: FastAPI app in backend/ with service layer pattern.
+  Frontend: Single-page app in frontend/ using fetch API for all server calls.
+  Data: Menu items loaded from backend/data/menu.json. Orders stored in memory.
+  No database, no authentication, no payment processing.
+  API endpoints: GET /api/menu, POST /api/orders, GET /api/orders, DELETE /api/orders/{id}.
