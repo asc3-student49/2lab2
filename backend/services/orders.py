@@ -1,10 +1,10 @@
 """
 Order Service
 
-Manages the BeanBotics order queue — placing, listing, and cancelling orders.
+Manages the BeanBotics order queue — placing, listing, cancelling, and lifecycle transitions.
 """
 
-from typing import List, Optional
+from typing import Dict, List, Optional, Set
 
 from backend.models import Order
 from backend.services.menu import MenuService
@@ -15,6 +15,13 @@ class OrderService:
         self.menu_service = menu_service
         self.orders: List[Order] = []
         self._next_id = 1
+        self.allowed_transitions: Dict[str, Set[str]] = {
+            "pending": {"preparing", "cancelled"},
+            "preparing": {"ready"},
+            "ready": {"completed"},
+            "completed": set(),
+            "cancelled": set(),
+        }
 
     def place_order(self, item_id: str, size: str) -> Optional[Order]:
         item = self.menu_service.get_item_by_id(item_id)
@@ -37,7 +44,7 @@ class OrderService:
         return order
 
     def get_all_orders(self) -> List[Order]:
-        return [o for o in self.orders if o.status != "cancelled"]
+        return self.orders
 
     def get_order_by_id(self, order_id: int) -> Optional[Order]:
         for order in self.orders:
@@ -45,9 +52,23 @@ class OrderService:
                 return order
         return None
 
-    def cancel_order(self, order_id: int) -> bool:
+    def transition_order_status(self, order_id: int, target_status: str) -> Order:
         order = self.get_order_by_id(order_id)
-        if order and order.status == "pending":
-            order.status = "cancelled"
+        if not order:
+            raise LookupError("Order not found")
+
+        allowed_next = self.allowed_transitions.get(order.status, set())
+        if target_status not in allowed_next:
+            raise ValueError(
+                f"Cannot transition order {order_id} from '{order.status}' to '{target_status}'"
+            )
+
+        order.status = target_status
+        return order
+
+    def cancel_order(self, order_id: int) -> bool:
+        try:
+            self.transition_order_status(order_id, "cancelled")
             return True
-        return False
+        except (LookupError, ValueError):
+            return False

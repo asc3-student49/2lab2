@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from typing import Literal
 from pathlib import Path
 
 from backend.services.menu import MenuService
@@ -31,6 +32,10 @@ app.mount("/static", StaticFiles(directory=str(frontend_dir)), name="static")
 class OrderRequest(BaseModel):
     item_id: str
     size: str
+
+
+class OrderStatusTransitionRequest(BaseModel):
+    status: Literal["preparing", "ready", "completed"]
 
 
 # --- Routes ---
@@ -62,7 +67,21 @@ async def list_orders():
 
 @app.delete("/api/orders/{order_id}")
 async def cancel_order(order_id: int):
-    success = order_service.cancel_order(order_id)
-    if not success:
-        raise HTTPException(status_code=404, detail="Order not found or cannot be cancelled")
-    return {"message": f"Order {order_id} cancelled"}
+    try:
+        order = order_service.transition_order_status(order_id, "cancelled")
+    except LookupError:
+        raise HTTPException(status_code=404, detail="Order not found")
+    except ValueError:
+        raise HTTPException(status_code=409, detail="Order cannot be cancelled in its current state")
+    return {"order": asdict(order)}
+
+
+@app.patch("/api/orders/{order_id}/status")
+async def transition_order_status(order_id: int, request: OrderStatusTransitionRequest):
+    try:
+        order = order_service.transition_order_status(order_id, request.status)
+    except LookupError:
+        raise HTTPException(status_code=404, detail="Order not found")
+    except ValueError as ex:
+        raise HTTPException(status_code=409, detail=str(ex))
+    return {"order": asdict(order)}

@@ -158,6 +158,50 @@ h2 {
     margin-top: 2rem;
 }
 
+.queue-group {
+    background: #121b36;
+    border: 1px solid #24335e;
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin-bottom: 0.9rem;
+}
+
+.queue-group-title {
+    color: #d9e1ff;
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+}
+
+.queue-group-body.collapsed {
+    display: none;
+}
+
+.queue-toggle {
+    background: transparent;
+    border: 1px solid #4f649f;
+    color: #b9c8ff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.queue-toggle:hover {
+    border-color: #7a8fd0;
+    color: #d8e2ff;
+}
+
+.queue-error {
+    background: rgba(233, 69, 96, 0.15);
+    border: 1px solid #e94560;
+    color: #ffd2da;
+    border-radius: 6px;
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+}
+
 .order-item {
     background: #16213e;
     border: 1px solid #0f3460;
@@ -189,31 +233,100 @@ h2 {
 }
 
 .order-status {
-    color: #a0a0b0;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
-    margin-right: 1rem;
+    margin-right: 0.8rem;
+    border-radius: 999px;
+    padding: 0.22rem 0.55rem;
+    min-width: 92px;
+    text-align: center;
 }
 
-.cancel-btn {
+.order-actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.status-action {
     background: transparent;
-    color: #e94560;
-    border: 1px solid #e94560;
-    padding: 0.3rem 0.7rem;
+    color: #7ec4ff;
+    border: 1px solid #4aa3eb;
+    padding: 0.3rem 0.65rem;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.8rem;
     transition: all 0.2s;
 }
 
-.cancel-btn:hover {
-    background: #e94560;
-    color: #fff;
+.status-action:hover {
+    background: rgba(74, 163, 235, 0.15);
+}
+
+.cancel-action {
+    color: #ff8f9f;
+    border-color: #e94560;
+}
+
+.cancel-action:hover {
+    background: rgba(233, 69, 96, 0.2);
+}
+
+.status-pending {
+    background: rgba(255, 196, 92, 0.18);
+    color: #ffd585;
+    border: 1px solid #c19132;
+}
+
+.status-preparing {
+    background: rgba(91, 175, 255, 0.18);
+    color: #9fd2ff;
+    border: 1px solid #4f97dd;
+}
+
+.status-ready {
+    background: rgba(77, 214, 132, 0.18);
+    color: #9cf0bf;
+    border: 1px solid #3ea56e;
+}
+
+.status-completed {
+    background: rgba(172, 151, 255, 0.2);
+    color: #cabaff;
+    border: 1px solid #866de0;
+}
+
+.status-cancelled {
+    background: rgba(255, 117, 130, 0.2);
+    color: #ffb3bc;
+    border: 1px solid #d5616e;
 }
 
 .empty-state, .loading {
     color: #a0a0b0;
     font-style: italic;
+}
+
+@media (max-width: 720px) {
+    .order-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.45rem;
+    }
+
+    .order-status {
+        margin-right: 0;
+    }
+
+    .order-actions {
+        width: 100%;
+    }
+
+    .status-action {
+        flex: 1;
+        text-align: center;
+    }
 }
 
 /* Footer */
